@@ -17,36 +17,51 @@ class App < Sinatra::Base
 
     # Routen /
     get '/' do
-        erb :index
+        erb ('/teams')
     end
 
-    get '/results' do
-        @results = db.execute('SELECT * FROM results')
-        p @todos
-        erb(:"todos/index")
+    get '/teams' do
+        @teams = db.execute('SELECT * FROM teams')
+        p @teams
+        erb(:"teams/index")
     end
 
-    get '/results/new' do
-        erb(:"results/new")
+    get '/teams/new' do
+        erb(:"teams/new")
     end
 
-    post '/results' do
+    post '/teams' do
         p params
 
-        db.execute("INSERT INTO results () VALUES(?,?)", [params["result_"], params["result_"]])
-        redirect("/results")
+        db.execute("INSERT INTO teams (name, img) VALUES(?,?)", [params["team_name"], params["team_img"]])
+        redirect("/teams")
     end
 
-    get'/results/:id' do | id |
-        @result = db.execute('SELECT * FROM results WHERE id=?', id).first
-        erb(:"results/show")
+    get'/teams/:id' do | id |
+        @teams = db.execute('SELECT * FROM teams WHERE id=?', id).first
+        erb(:"teams/show")
     end
 
-    post '/results/:id/delete' do | id |
-        db.execute("DELETE FROM results WHERE id=?", id)
-        redirect("/results")
+    post '/teams/:id/delete' do | id |
+        db.execute("DELETE FROM teams WHERE id=?", id)
+        redirect("/teams")
     end
 
-    get
+    get '/teams/:id/edit' do | id |
+        
+        @teams = db.execute('SELECT * FROM teams WHERE id=?, id').first
+
+        erb(:"teams/edit")
+    end
+
+    post '/teams/:id/update' do | id |
+        team_name = params['team_name']
+
+
+        db.execute('UPDATE teams SET name=? WHERE id=?', [team_name, team_img, id])
+
+        redirect("/teams")
+    end
+
 
 end

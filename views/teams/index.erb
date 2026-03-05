@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JM Archives</title>
+    <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>">
+</head>
+<body>
+  <h1>JM Results</h1>
+    <ul>
+      <% @teams.each do |team| %>
+        <li>
+          <h3><%= team["name"] %></h3>
+          
+
+
+          <form class="delete" action="/teams/<%=team["id"]%>/delete" method="post">
+            <input type="submit" value="Delete">
+          </form>
+
+          <form class="update" action="/teams/<%=team["id"]%>/edit" method="get">
+            <input type="submit" value="Edit">
+          </form>
+        </li>
+        <% end %>  
+      </ul>
+  
+</body>
+</html>
