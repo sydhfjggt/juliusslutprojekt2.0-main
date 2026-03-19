@@ -33,7 +33,7 @@ class App < Sinatra::Base
     post '/teams' do
         p params
 
-        db.execute("INSERT INTO teams (name, img) VALUES(?,?)", [params["team_name"], params["team_img"]])
+        db.execute("INSERT INTO teams (name) VALUES(?)", [params["team_name"]])
         redirect("/teams")
     end
 
@@ -58,7 +58,7 @@ class App < Sinatra::Base
         team_name = params['team_name']
 
 
-        db.execute('UPDATE teams SET name=? WHERE id=?', [team_name, team_img, id])
+        db.execute('UPDATE teams SET name=? WHERE id=?', [team_name, id])
 
         redirect("/teams")
     end
