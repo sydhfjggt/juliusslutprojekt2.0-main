@@ -15,7 +15,7 @@ class Seeder
 
   def self.drop_tables
     db.execute('DROP TABLE IF EXISTS teams')
-    db.execute('DROP TABLE IF EXISTS result')
+    db.execute('DROP TABLE IF EXISTS results')
   end
 
   def self.create_tables
@@ -23,13 +23,12 @@ class Seeder
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL)")
 
-    db.execute("CREATE TABLE result (
+    db.execute("CREATE TABLE results (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 id_team1 INTEGER NOT NULL,
                 id_team2 INTEGER NOT NULL,
                 score_team1 INTEGER NOT NULL,
-                score_team2 INTEGER NOT NULL,
-
+                score_team2 INTEGER NOT NULL
                 )")
   end
 
@@ -55,16 +54,16 @@ class Seeder
     db.execute('INSERT INTO teams (name) VALUES ("Lecce")')
     db.execute('INSERT INTO teams (name) VALUES ("Pisa")')
   
-    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("17, 15, 4, 1)')
-    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("3, 10, 1, 1)')
-    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("4, 19, 2, 1)')
-    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("13, 2, 0, 1)')
-    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("8, 7, 0, 2)')
-    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("20, 16, 3, 1)')
-    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("12, 11, 0, 1)')
-    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("9, 1, 2, 1)')
-    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("14, 4, 1, 0)')
-    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("6, 18, 1, 4)')
+    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("17", "15", "4", "1")')
+    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("3", "10", "1", "1")')
+    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("4", "19", "2", "1")')
+    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("13", "2", "0", "1")')
+    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("8", "7", "0", "2")')
+    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("20", "16", "3", "1")')
+    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("12", "11", "0", "1")')
+    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("9", "1", "2", "1")')
+    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("14", "4", "1", "0")')
+    db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("6", "18", "1","4")')
 
    
   

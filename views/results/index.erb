@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JM Archives</title>
+    <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>">
+</head>
+<body>
+  <h1>JM Results</h1>
+    <ul>
+      <% @results.each do |result| %>
+      <li>
+          Lag <%= result["id_team1"] %> vs Lag <%= result["id_team2"] %> 
+          - Resultat: <%= result["score_team1"] %>-<%= result["score_team2"] %>
+      </li>
+      <% end %>
+    </ul>
+  
+</body>
+</html>

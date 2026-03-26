@@ -63,5 +63,53 @@ class App < Sinatra::Base
         redirect("/teams")
     end
 
+    get '/results' do
+        @results = db.execute('SELECT * FROM results')
+        p @results
+        erb(:"results/index")
+    end
+
+    get '/results/new' do
+        erb(:"results/new")
+    end
+
+    post '/results' do
+        p params
+
+        db.execute("INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES(?,?,?,?)", [params["result_id_team1"], params["result_id_team2"], params["result_score_team1"], params["result_score_team2"]])
+        redirect("/results")
+    end
+
+    get'/results/:id' do | id |
+        @results = db.execute('SELECT * FROM results WHERE id=?', id).first
+        erb(:"results/show")
+    end
+
+    post '/results/:id/delete' do | id |
+        db.execute("DELETE FROM results WHERE id=?", id)
+        redirect("/results")
+    end
+
+    get '/results/:id/edit' do | id |
+        
+        @results = db.execute('SELECT * FROM results WHERE id=?, id').first
+
+        erb(:"results/edit")
+    end
+
+    post '/results/:id/update' do | id |
+        result_name1 = params['result_id_team1']
+        result_name2 = params['result_id_team2']
+        result_name3 = params['result_score_team1']
+        result_name4 = params['result_score_team2']
+
+
+        db.execute('UPDATE results SET id_team1=? WHERE id=?', [result_name1, result_name2, result_name3, result_name4, id])
+
+        redirect("/results")
+    end
+
+    
+
 
 end
