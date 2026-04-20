@@ -1,0 +1,8 @@
+<h2> Update Team </h2>
+
+<form action="/teams/<%= @team["id"]%>/update" method="post">
+    <label> Team
+        <input type="text" name="team_name" value="<%= @team['name']%>">
+    </label>
+    <input type="submit" value="Update">
+</form>

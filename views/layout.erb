@@ -4,5 +4,21 @@
     <title>JM Results</title>
 </head>
 <body>
-    <%= yield %>  </body>
+    
+    <header class="main-header">
+        <div class="container">
+            <h1>JM Archives</h1>
+            <nav>
+                <a href="/teams">Home</a>
+                <a href="/teams">All Teams</a>
+                <a href="/teams/new">Add team</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <%= yield %>  
+    </main>
+    
+</body>
 </html>

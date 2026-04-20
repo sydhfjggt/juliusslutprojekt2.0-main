@@ -49,7 +49,7 @@ class App < Sinatra::Base
 
     get '/teams/:id/edit' do | id |
         
-        @teams = db.execute('SELECT * FROM teams WHERE id=?, id').first
+        @team = db.execute('SELECT * FROM teams WHERE id=?', id).first
 
         erb(:"teams/edit")
     end
@@ -64,7 +64,16 @@ class App < Sinatra::Base
     end
 
     get '/results' do
-        @results = db.execute('SELECT * FROM results')
+        #@results = db.execute('SELECT * FROM results')
+        @results =  db.execute( "SELECT 
+    r.id AS match_id,
+    t1.name AS team1,
+    t2.name AS team2,
+    r.score_team1,
+    r.score_team2
+FROM results AS r
+INNER JOIN teams AS t1 ON r.id_team1 = t1.id
+INNER JOIN teams AS t2 ON r.id_team2 = t2.id;")
         p @results
         erb(:"results/index")
     end
