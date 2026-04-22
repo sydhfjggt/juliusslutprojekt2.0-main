@@ -14,6 +14,15 @@
       <li>
           <%= result["team1"] %> vs <%= result["team2"] %> 
           - Result: <%= result["score_team1"] %>-<%= result["score_team2"] %>
+
+          <form class="update" action="/results/<%=result["match_id"]%>/edit" method="get">
+            <input type="submit" value="Edit">
+          </form>
+
+          <form class="delete" action="/results/<%=result["match_id"]%>/delete" method="post">
+            <input type="submit" value="Delete">
+          </form>
+
       </li>
       <% end %>
     </ul>

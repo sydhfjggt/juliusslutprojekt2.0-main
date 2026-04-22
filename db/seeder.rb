@@ -1,8 +1,14 @@
 require 'sqlite3'
+require_relative '../config'
+require 'bcrypt'
+require 'bundler/setup'
 
 class Seeder
 
   def self.seed!
+
+    @db = nil
+
     puts "Using db file: #{DB_PATH}"
     puts "🧹 Dropping old tables..."
     drop_tables
@@ -13,9 +19,20 @@ class Seeder
     puts "✅ Done seeding the database!"
   end
 
+  def self.db
+    @db ||= begin
+      db = SQLite3::Database.new(DB_PATH)
+      db.results_as_hash = true
+      db
+    end
+  end
+
+  private
+
   def self.drop_tables
     db.execute('DROP TABLE IF EXISTS teams')
     db.execute('DROP TABLE IF EXISTS results')
+    db.execute('DROP TABLE IF EXISTS users')
   end
 
   def self.create_tables
@@ -29,6 +46,12 @@ class Seeder
                 id_team2 INTEGER NOT NULL,
                 score_team1 INTEGER NOT NULL,
                 score_team2 INTEGER NOT NULL
+                )")
+    db.execute("CREATE TABLE users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT NOT NULL,
+                password_digest TEXT NOT NULL,
+                is_admin INTEGER DEFAULT 0
                 )")
   end
 
@@ -65,21 +88,13 @@ class Seeder
     db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("14", "4", "1", "0")')
     db.execute('INSERT INTO results (id_team1, id_team2, score_team1, score_team2) VALUES("6", "18", "1","4")')
 
-   
   
+    password_hashed = BCrypt::Password.create("123")
+    p "Storing hashed password (#{password_hashed}) to DB. Clear text password (123) never saved."
+    db.execute("INSERT INTO users (username, password_digest, is_admin) VALUES (?, ?, ?)", ["admin", password_hashed, 1])
   end
-
-  private
-
-  def self.db
-    @db ||= begin
-      db = SQLite3::Database.new(DB_PATH)
-      db.results_as_hash = true
-      db
-    end
-  end
-
 end
+
 
 Seeder.seed!
   

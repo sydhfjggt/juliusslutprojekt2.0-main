@@ -11,7 +11,18 @@
             <nav>
                 <a href="/teams">Home</a>
                 <a href="/teams">All Teams</a>
+    
+            <% if session[:user_id] %>
                 <a href="/teams/new">Add team</a>
+                <a href="/results/new">Add result</a>
+        
+                <form action="/logout" method="post" style="display: inline;">
+                    <button type="submit" style="background: none; border: none; color: blue; cursor: pointer; text-decoration: underline; padding: 0;">Log out</button>
+                </form>
+            <% else %>
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            <% end %>
             </nav>
         </div>
     </header>
