@@ -1,18 +1,26 @@
 <h2> Update Result </h2>
 
-<form action="/results" method="post">
-    <label> Team 1 
-        <input type="number" name="result_id_team1">
-    </label>
-    <label> Team 2 
-        <input type="number" name="result_id_team2">
-    </label>
-    <label> Home team score
-        <input type="number" name="result_score_team1">
-    </label>
-    <label> Away team score
-        <input type="number" name="result_score_team2">
-    </label>
-    <input type="submit" value="Create">
-</form>
+<form action="/results/<%= @result['id'] %>/update" method="post">
+    <label for="team1">Lag 1:</label>
+    <select name="result_id_team1" id="team1">
+        <% @teams.each do |team| %>
+            <option value="<%= team['id'] %>" %><%= team['name'] %></option>
+        <% end %>
+    </select>
 
+    <label for="score1">Mål Lag 1:</label>
+    <input type="number" name="result_score_team1">
+
+    <br>
+
+    <label for="team2">Lag 2:</label>
+    <select name="result_id_team2" id="team2">
+        <% @teams.each do |team| %>
+            <option value="<%= team['id'] %>"%><%= team['name'] %></option>
+        <% end %>
+    </select>
+
+    <label for="score2">Mål Lag 2:</label>
+    <input type="number" name="result_score_team2">
+
+    <input type="submit" value="Update">

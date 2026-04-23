@@ -103,6 +103,7 @@ class App < Sinatra::Base
     end
 
     get '/results/new' do
+        @teams = db.execute("SELECT * FROM teams")
         erb(:"results/new")
     end
 
@@ -114,6 +115,7 @@ class App < Sinatra::Base
 
     get '/results/:id/edit' do |id|
         if is_admin?
+            @teams = db.execute("SELECT * FROM teams")
             @result = db.execute('SELECT * FROM results WHERE id = ?', id).first
             erb(:"results/edit")
         else
@@ -152,15 +154,7 @@ class App < Sinatra::Base
 
     #INLOGGNING
 
-    setup_development_features(self)
-
-    def db
-      return @db if @db
-      @db = SQLite3::Database.new(DB_PATH)
-      @db.results_as_hash = true
-
-      return @db
-    end
+    
 
   configure do
     enable :sessions
@@ -232,6 +226,16 @@ class App < Sinatra::Base
     ap "Logging out"
     session.clear
     redirect '/'
+  end
+
+  post '/register' do
+    username = params[:user_name]
+    plain_password = params[:password]
+    password_hashed = BCrypt::Password.create(plain_password)
+
+    db.execute("INSERT INTO users (username, password_digest) VALUES (?, ?)", 
+        [username, password_hashed])
+    redirect ('/login')
   end
 
   get '/users/new' do
